@@ -25,7 +25,7 @@ struct FabBarModifier<Value: Hashable>: ViewModifier {
                         .padding(.bottom, Constants.bottomPadding)
                 }
             }
-            .ignoresSafeArea(.container, edges: .bottom)
+            .ignoresSafeArea(.container, edges: horizontalSizeClass == .compact && isVisible ? [.bottom] : [])
     }
 }
 
