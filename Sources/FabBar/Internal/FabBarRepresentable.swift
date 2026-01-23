@@ -55,7 +55,9 @@ struct FabBarRepresentable<Value: Hashable>: UIViewRepresentable {
         return container
     }
 
-    func updateUIView(_ uiView: GlassTabBarView<Value>, context _: Context) {
+    func updateUIView(_ uiView: GlassTabBarView<Value>, context: Context) {
+        context.coordinator.parent = self
+
         let control = uiView.segmentedControl
         let newIndex = tabs.firstIndex { $0.value == activeTab } ?? 0
         let selectionChanged = control.selectedSegmentIndex != newIndex
