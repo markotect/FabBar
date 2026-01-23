@@ -11,7 +11,6 @@ struct FabBarRepresentable<Tab: Hashable>: UIViewRepresentable {
     var action: FabAction
 
     @Binding var activeTab: Tab
-    var onReselect: ((Tab) -> Void)?
 
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
@@ -40,7 +39,7 @@ struct FabBarRepresentable<Tab: Hashable>: UIViewRepresentable {
         let coordinator = context.coordinator
         control.onReselect = { index in
             if index >= 0 && index < coordinator.parent.items.count {
-                coordinator.parent.onReselect?(coordinator.parent.items[index].tab)
+                coordinator.parent.items[index].onReselect?()
             }
         }
 

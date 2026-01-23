@@ -16,9 +16,14 @@ import SwiftUI
 ///     @State private var selectedTab: AppTab = .home
 ///
 ///     var body: some View {
-///         VStack {
-///             // Your tab content here
-///
+///         TabView(selection: $selectedTab) {
+///             Tab(value: AppTab.home) {
+///                 HomeView()
+///                     .toolbarVisibility(.hidden, for: .tabBar)
+///             }
+///             // more tabs...
+///         }
+///         .safeAreaBar(edge: .bottom) {
 ///             FabBar(
 ///                 selection: $selectedTab,
 ///                 items: [
@@ -33,13 +38,24 @@ import SwiftUI
 ///                     // Handle tap
 ///                 }
 ///             )
+///             .padding(.horizontal, 16)
+///             .padding(.bottom, 21)
 ///         }
+///         .ignoresSafeArea(.container, edges: .bottom)
 ///     }
 /// }
 /// ```
 
 @available(iOS 26.0, *)
 public struct FabBar<Tab: Hashable>: View {
+    /// Height of the tab bar.
+    ///
+    /// Use this to calculate bottom content margins for scroll views:
+    /// ```swift
+    /// let bottomMargin = FabBar.height + yourBottomPadding
+    /// ```
+    public static var height: CGFloat { Constants.barHeight }
+
     /// The currently selected tab.
     @Binding public var selection: Tab
 
@@ -49,26 +65,20 @@ public struct FabBar<Tab: Hashable>: View {
     /// The floating action button configuration.
     public var action: FabAction
 
-    /// Callback invoked when the user taps an already-selected tab.
-    public var onReselect: ((Tab) -> Void)?
-
     /// Creates a FabBar with the specified configuration.
     ///
     /// - Parameters:
     ///   - selection: A binding to the currently selected tab.
     ///   - items: The tab items to display.
     ///   - action: The floating action button configuration.
-    ///   - onReselect: Optional callback invoked when the user taps an already-selected tab.
     public init(
         selection: Binding<Tab>,
         items: [FabBarItem<Tab>],
-        action: FabAction,
-        onReselect: ((Tab) -> Void)? = nil
+        action: FabAction
     ) {
         self._selection = selection
         self.items = items
         self.action = action
-        self.onReselect = onReselect
     }
 
     public var body: some View {
@@ -84,8 +94,7 @@ public struct FabBar<Tab: Hashable>: View {
                     size: geo.size,
                     items: items,
                     action: action,
-                    activeTab: $selection,
-                    onReselect: onReselect
+                    activeTab: $selection
                 )
             }
             .frame(height: Constants.barHeight)

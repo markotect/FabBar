@@ -38,18 +38,21 @@ struct ContentView: View {
             FabBar(
                 selection: $selectedTab,
                 items: [
-                    FabBarItem(tab: AppTab.home, title: "Home", systemImage: "house.fill"),
-                    FabBarItem(tab: AppTab.explore, title: "Explore", systemImage: "map.fill"),
-                    FabBarItem(tab: AppTab.profile, title: "Profile", systemImage: "person.fill"),
+                    FabBarItem(tab: AppTab.home, title: "Home", systemImage: "house.fill", onReselect: {
+                        print("Reselected: home")
+                    }),
+                    FabBarItem(tab: AppTab.explore, title: "Explore", systemImage: "map.fill", onReselect: {
+                        print("Reselected: explore")
+                    }),
+                    FabBarItem(tab: AppTab.profile, title: "Profile", systemImage: "person.fill", onReselect: {
+                        print("Reselected: profile")
+                    }),
                 ],
                 action: FabAction(
                     systemImage: "plus",
                     accessibilityLabel: "Add"
                 ) {
                     showingSheet = true
-                },
-                onReselect: { tab in
-                    print("Reselected: \(tab)")
                 }
             )
             .padding(.horizontal, TabBarLayout.horizontalPadding)

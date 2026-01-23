@@ -23,22 +23,29 @@ public struct FabBarItem<Tab: Hashable>: Identifiable {
     /// The bundle containing the custom image. Defaults to `.main` if not specified.
     public let imageBundle: Bundle?
 
+    /// Called when the user taps this tab while it's already selected.
+    /// Useful for scroll-to-top or similar behaviors.
+    public let onReselect: (() -> Void)?
+
     /// Creates a tab item with an SF Symbol icon.
     ///
     /// - Parameters:
     ///   - tab: The tab identifier.
     ///   - title: The title displayed below the icon.
     ///   - systemImage: The SF Symbol name for the icon.
+    ///   - onReselect: Called when the user taps this tab while it's already selected.
     public init(
         tab: Tab,
         title: String,
-        systemImage: String
+        systemImage: String,
+        onReselect: (() -> Void)? = nil
     ) {
         self.tab = tab
         self.title = title
         self.systemImage = systemImage
         self.image = nil
         self.imageBundle = nil
+        self.onReselect = onReselect
     }
 
     /// Creates a tab item with a custom image from a bundle.
@@ -48,16 +55,19 @@ public struct FabBarItem<Tab: Hashable>: Identifiable {
     ///   - title: The title displayed below the icon.
     ///   - image: The custom image name.
     ///   - imageBundle: The bundle containing the image. Defaults to `.main`.
+    ///   - onReselect: Called when the user taps this tab while it's already selected.
     public init(
         tab: Tab,
         title: String,
         image: String,
-        imageBundle: Bundle? = nil
+        imageBundle: Bundle? = nil,
+        onReselect: (() -> Void)? = nil
     ) {
         self.tab = tab
         self.title = title
         self.systemImage = nil
         self.image = image
         self.imageBundle = imageBundle ?? .main
+        self.onReselect = onReselect
     }
 }
