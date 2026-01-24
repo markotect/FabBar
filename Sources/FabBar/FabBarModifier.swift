@@ -18,6 +18,12 @@ struct FabBarModifier<Value: Hashable>: ViewModifier {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var bottomSafeAreaInset: CGFloat = 0
 
+    /// Whether the FabBar should be displayed.
+    /// Only shows on compact horizontal size class (iPhone) when visible.
+    private var showsFabBar: Bool {
+        horizontalSizeClass == .compact && isVisible
+    }
+
     /// Total content margin needed to clear the FabBar.
     private var bottomContentMargin: CGFloat {
         Constants.barHeight + Constants.bottomPadding
@@ -26,20 +32,21 @@ struct FabBarModifier<Value: Hashable>: ViewModifier {
     /// The padding to inject into the environment.
     /// This is the total content margin minus the device's safe area inset,
     /// because `safeAreaPadding` adds to the existing safe area.
+    /// Returns 0 when the FabBar is not showing.
     private var calculatedPadding: CGFloat {
-        bottomContentMargin - bottomSafeAreaInset
+        showsFabBar ? bottomContentMargin - bottomSafeAreaInset : 0
     }
 
     func body(content: Content) -> some View {
         content
             .safeAreaBar(edge: .bottom) {
-                if horizontalSizeClass == .compact && isVisible {
+                if showsFabBar {
                     FabBar(selection: $selection, tabs: tabs, action: action)
                         .padding(.horizontal, Constants.horizontalPadding)
                         .padding(.bottom, Constants.bottomPadding)
                 }
             }
-            .ignoresSafeArea(.all, edges: horizontalSizeClass == .compact && isVisible ? [.bottom] : [])
+            .ignoresSafeArea(.all, edges: showsFabBar ? [.bottom] : [])
             .onGeometryChange(for: CGFloat.self) { proxy in
                 proxy.safeAreaInsets.bottom
             } action: { newValue in
