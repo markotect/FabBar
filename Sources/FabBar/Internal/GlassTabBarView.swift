@@ -82,8 +82,13 @@ final class GlassTabBarView: UIView {
         fabGlassView.contentView.addSubview(fabButton)
         fabButton.translatesAutoresizingMaskIntoConstraints = false
 
-        // Store action for button
-        fabButton.addAction(UIAction { _ in action.action() }, for: .touchUpInside)
+        // Configure button interaction
+        if let menu = action.menu {
+            fabButton.menu = menu
+            fabButton.showsMenuAsPrimaryAction = true
+        } else {
+            fabButton.addAction(UIAction { _ in action.action() }, for: .touchUpInside)
+        }
 
         // Extra bottom inset compensates for UISegmentedControl's internal padding,
         // visually centering the content within the glass container.

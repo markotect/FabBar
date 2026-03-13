@@ -21,6 +21,10 @@ public struct FabBarAction {
     /// Defaults to `.tintColor` (the app's accent color).
     public let tintColor: UIColor?
 
+    /// An optional menu to display when the FAB is tapped.
+    /// When set, the menu takes priority over `action`.
+    public let menu: UIMenu?
+
     /// The action to perform when the button is tapped.
     public let action: () -> Void
 
@@ -30,16 +34,19 @@ public struct FabBarAction {
     ///   - systemImage: The SF Symbol name for the button icon.
     ///   - accessibilityLabel: The accessibility label for VoiceOver users.
     ///   - tintColor: The tint color for the FAB glass effect. Defaults to `.tintColor`.
+    ///   - menu: An optional menu shown as the primary action. Defaults to `nil`.
     ///   - action: The action to perform when the button is tapped.
     public init(
         systemImage: String,
         accessibilityLabel: String,
         tintColor: UIColor? = .tintColor,
+        menu: UIMenu? = nil,
         action: @escaping () -> Void
     ) {
         self.systemImage = systemImage
         self.accessibilityLabel = accessibilityLabel
         self.tintColor = tintColor
+        self.menu = menu
         self.action = action
     }
 }
