@@ -16,6 +16,7 @@ final class GlassTabBarView: UIView {
 
     private(set) var tabCount: Int
     private var segmentedTrailingConstraint: NSLayoutConstraint?
+    private let fabTintColor: UIColor?
 
     init(
         segmentedControl: TabBarSegmentedControl,
@@ -24,6 +25,7 @@ final class GlassTabBarView: UIView {
     ) {
         self.segmentedControl = segmentedControl
         self.tabCount = tabCount
+        self.fabTintColor = action.tintColor
 
         // Create glass container effect for morphing
         let containerEffect = UIGlassContainerEffect()
@@ -38,14 +40,14 @@ final class GlassTabBarView: UIView {
         // Create FAB button
         let fabGlassEffect = UIGlassEffect()
         fabGlassEffect.isInteractive = true
-        fabGlassEffect.tintColor = .tintColor
+        fabGlassEffect.tintColor = action.tintColor
         fabGlassView = UIVisualEffectView(effect: fabGlassEffect)
 
         let button = UIButton(type: .system)
         let config = UIImage.SymbolConfiguration(pointSize: Constants.fabIconPointSize, weight: .medium)
         let buttonImage = UIImage(systemName: action.systemImage, withConfiguration: config)
         button.setImage(buttonImage, for: .normal)
-        button.tintColor = .white
+        button.tintColor = action.tintColor == nil ? .label : .white
         button.accessibilityLabel = action.accessibilityLabel
         button.accessibilityTraits = .button
         fabButton = button
@@ -160,8 +162,9 @@ final class GlassTabBarView: UIView {
         // Create a new effect since modifying existing effect's tintColor doesn't update visuals
         let newEffect = UIGlassEffect()
         newEffect.isInteractive = true
-        newEffect.tintColor = tintColor
+        newEffect.tintColor = fabTintColor
         fabGlassView.effect = newEffect
+        fabButton.tintColor = fabTintColor == nil ? .label : .white
     }
 }
 #endif

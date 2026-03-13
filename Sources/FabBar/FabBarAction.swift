@@ -1,4 +1,8 @@
+#if canImport(UIKit)
+import UIKit
+#else
 import Foundation
+#endif
 
 /// Configuration for the floating action button (FAB) in FabBar.
 ///
@@ -12,6 +16,11 @@ public struct FabBarAction {
     /// The accessibility label for VoiceOver users.
     public let accessibilityLabel: String
 
+    /// The tint color applied to the FAB's glass effect.
+    /// Pass `nil` for a neutral (untinted) glass appearance.
+    /// Defaults to `.tintColor` (the app's accent color).
+    public let tintColor: UIColor?
+
     /// The action to perform when the button is tapped.
     public let action: () -> Void
 
@@ -20,14 +29,17 @@ public struct FabBarAction {
     /// - Parameters:
     ///   - systemImage: The SF Symbol name for the button icon.
     ///   - accessibilityLabel: The accessibility label for VoiceOver users.
+    ///   - tintColor: The tint color for the FAB glass effect. Defaults to `.tintColor`.
     ///   - action: The action to perform when the button is tapped.
     public init(
         systemImage: String,
         accessibilityLabel: String,
+        tintColor: UIColor? = .tintColor,
         action: @escaping () -> Void
     ) {
         self.systemImage = systemImage
         self.accessibilityLabel = accessibilityLabel
+        self.tintColor = tintColor
         self.action = action
     }
 }
