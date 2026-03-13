@@ -1,8 +1,5 @@
 #if canImport(UIKit)
 import UIKit
-#else
-import Foundation
-#endif
 
 /// Configuration for the floating action button (FAB) in FabBar.
 ///
@@ -50,3 +47,4 @@ public struct FabBarAction {
         self.action = action
     }
 }
+#endif
