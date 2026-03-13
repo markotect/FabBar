@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import SwiftUI
 
 /// A customizable iOS 26 glass tab bar with a floating action button.
@@ -77,3 +78,4 @@ public struct FabBar<Value: Hashable>: View {
         }
     }
 }
+#endif

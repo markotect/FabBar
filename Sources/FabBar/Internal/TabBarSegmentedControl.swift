@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import UIKit
 
 /// A UISegmentedControl subclass customized for use as a tab bar replacement.
@@ -478,3 +479,4 @@ private final class DisplayLinkProxy: NSObject {
         control.updateAccentMasks()
     }
 }
+#endif

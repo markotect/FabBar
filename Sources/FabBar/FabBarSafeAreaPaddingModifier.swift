@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import SwiftUI
 
 // MARK: - Environment Key
@@ -39,3 +40,4 @@ public extension View {
         modifier(FabBarSafeAreaPaddingModifier())
     }
 }
+#endif

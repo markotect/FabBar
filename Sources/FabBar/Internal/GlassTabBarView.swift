@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import UIKit
 
 /// The root UIKit view that assembles the tab bar with glass effects.
@@ -163,3 +164,4 @@ final class GlassTabBarView: UIView {
         fabGlassView.effect = newEffect
     }
 }
+#endif

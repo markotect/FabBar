@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import UIKit
 
 /// A custom-draw view that renders a tab item (SF Symbol icon + title) at the current graphics context scale.
@@ -128,3 +129,4 @@ final class TabItemContentView: UIView {
         return nil
     }
 }
+#endif

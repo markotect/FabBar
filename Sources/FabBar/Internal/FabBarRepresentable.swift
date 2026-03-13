@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import SwiftUI
 import UIKit
 
@@ -146,3 +147,4 @@ struct FabBarRepresentable<Value: Hashable>: UIViewRepresentable {
         }
     }
 }
+#endif

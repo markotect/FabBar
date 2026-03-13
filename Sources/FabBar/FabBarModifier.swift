@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import SwiftUI
 
 /// View modifier that positions a FabBar at the bottom of the view.
@@ -89,3 +90,4 @@ public extension View {
         modifier(FabBarModifier(selection: selection, tabs: tabs, action: action, isVisible: isVisible))
     }
 }
+#endif

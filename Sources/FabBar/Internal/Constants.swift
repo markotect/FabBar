@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import os
 import UIKit
 
@@ -56,3 +57,4 @@ enum Constants {
 
 /// Logger for FabBar warnings and diagnostics.
 let fabBarLogger = Logger(subsystem: "com.ryanashcraft.FabBar", category: "FabBar")
+#endif
